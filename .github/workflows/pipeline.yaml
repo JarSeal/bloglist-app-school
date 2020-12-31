@@ -21,6 +21,8 @@ jobs:
         run: cd backend && npm install
       - name: lint backend
         run: cd backend && npm run lint
+      - name: run backend in test
+        run: cd backend && TEST_MONGODB_URI=${{secrets.TEST_MONGODBG_URI}} PORT=${{secrets.PORT}} SECRET=${{secrets.SOME_SECRET}} npm run start:test
       - name: test backend
         run: cd backend && npm test
       # - name: e2e tests
