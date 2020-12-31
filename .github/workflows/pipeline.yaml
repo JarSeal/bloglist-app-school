@@ -18,17 +18,21 @@ jobs:
         with:
           node-version: '12.x'
       - name: npm install backend
-        run: cd backend && npm install
+        working-directory: ./backend
+        run: npm install
       - name: lint backend
-        run: cd backend && npm run lint
+        working-directory: ./backend
+        run: npm run lint
       - name: list backend
-        run: cd backend && ls -a
-      - name: run backend and test
-        run: cd backend && npm start & npm test
-        env:
-          MONGODB_URI: ${{secrets.MONGODB_URI}}
-          PORT: ${{secrets.PORT}}
-          SECRET: ${{secrets.SOME_SECRET}}
+        working-directory: ./backend
+        run: ls -a
+      # - name: run backend and test
+      #   run: npm start & npm test
+      #   working-directory: ./backend
+      #   env:
+      #     MONGODB_URI: ${{secrets.MONGODB_URI}}
+      #     PORT: ${{secrets.PORT}}
+      #     SECRET: ${{secrets.SOME_SECRET}}
       # - name: test backend
       #   run: cd backend && npm test
       # - name: e2e tests
