@@ -24,7 +24,11 @@ jobs:
       - name: list backend
         run: cd backend && ls -a
       - name: run backend and test
-        run: cd backend && MONGODB_URI=${{secrets.MONGODB_URI}} PORT=${{secrets.PORT}} SECRET=${{secrets.SOME_SECRET}} npm start & npm test
+        run: cd backend && npm start & npm test
+        env:
+          MONGODB_URI=${{secrets.MONGODB_URI}}
+          PORT=${{secrets.PORT}}
+          SECRET=${{secrets.SOME_SECRET}}
       # - name: test backend
       #   run: cd backend && npm test
       # - name: e2e tests
