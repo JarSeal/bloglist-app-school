@@ -23,10 +23,10 @@ jobs:
         run: cd backend && npm run lint
       - name: list backend
         run: cd backend && ls -a
-      # - name: run backend in test
-      #   run: cd backend && TEST_MONGODB_URI=${{secrets.TEST_MONGODB_URI}} PORT=${{secrets.PORT}} SECRET=${{secrets.SOME_SECRET}} npm run start:test
-      - name: test backend
-        run: cd backend && npm test
+      - name: run backend and test
+        run: cd backend && MONGODB_URI=${{secrets.MONGODB_URI}} PORT=${{secrets.PORT}} SECRET=${{secrets.SOME_SECRET}} npm start & npm test
+      # - name: test backend
+      #   run: cd backend && npm test
       # - name: e2e tests
       #   uses: cypress-io/github-action@v2
       #   with:
