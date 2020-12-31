@@ -20,9 +20,9 @@ jobs:
       - name: npm install backend
         run: cd backend && npm install
       - name: lint backend
-        run: npm run lint
+        run: cd backend && npm run lint
       - name: test backend
-        run: npm test
+        run: cd backend && npm test
       # - name: e2e tests
       #   uses: cypress-io/github-action@v2
       #   with:
