@@ -52,20 +52,30 @@ jobs:
       - name: copy frontend to backend folder
         working-directory: ./frontend
         run: cp -rf build ../backend/front
-      - name: open front development server for e2e tests
-        working-directory: ./frontend
-        run: npm start &
-      - name: e2e tests
-        uses: cypress-io/github-action@v2
-        with:
-          working-directory: ./frontend
-          command: npm run test:e2e
-          start: cd ../backend && TEST_MONGODB_URI=$TEST_MONGODB_URI PORT=$PORT SECRET=$SECRET npm run start:test
-          wait-on: http://localhost:3000
+      - name: start e2e tests backend server
+        working-directory: ./backend
+        run: TEST_MONGODB_URI=$TEST_MONGODB_URI PORT=$PORT SECRET=$SECRET npm run start:test &
         env:
           TEST_MONGODB_URI: ${{secrets.TEST_MONGODB_URI}}
           PORT: ${{secrets.PORT}}
           SECRET: ${{secrets.SOME_SECRET}}
+      - name: open front development server for e2e tests
+        working-directory: ./frontend
+        run: npm start &
+      - name: run cypress (e2e tests)
+        working-directory: ./frontend
+        run: npm run test:e2e
+      # - name: e2e tests
+      #   uses: cypress-io/github-action@v2
+      #   with:
+      #     working-directory: ./frontend
+      #     command: npm run test:e2e
+      #     start: cd ../backend && TEST_MONGODB_URI=$TEST_MONGODB_URI PORT=$PORT SECRET=$SECRET npm run start:test
+      #     wait-on: http://localhost:3000
+      #   env:
+      #     TEST_MONGODB_URI: ${{secrets.TEST_MONGODB_URI}}
+      #     PORT: ${{secrets.PORT}}
+      #     SECRET: ${{secrets.SOME_SECRET}}
       # - uses: akhileshns/heroku-deploy@v3.7.8
       #   if: "github.event_name == 'push' && !contains(github.event.head_commit.message, '#skip')"
       #   with:
