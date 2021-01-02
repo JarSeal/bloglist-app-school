@@ -17,9 +17,9 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: '12.x'
-      # - name: npm install backend
-      #   working-directory: ./backend
-      #   run: npm install
+      - name: npm install backend
+        working-directory: ./backend
+        run: npm install
       # - name: lint backend
       #   working-directory: ./backend
       #   run: npm run lint
@@ -47,9 +47,9 @@ jobs:
         with:
           working-directory: ./frontend
           command: npm run test:e2e
-          # start: cd ../backend && TEST_MONGODB_URI=$TEST_MONGODB_URI PORT=$PORT SECRET=$SECRET npm run start:test
-          start: cd ./../backend && npm install
-          # wait-on: http://localhost:${{secrets.PORT}}
+          start: cd backend && TEST_MONGODB_URI=$TEST_MONGODB_URI PORT=$PORT SECRET=$SECRET npm run start:test
+          # start: cd ./../backend && npm install
+          wait-on: http://localhost:${{secrets.PORT}}
         env:
           TEST_MONGODB_URI: ${{secrets.TEST_MONGODB_URI}}
           PORT: ${{secrets.PORT}}
