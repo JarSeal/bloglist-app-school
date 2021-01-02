@@ -17,37 +17,38 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: '12.x'
-      - name: npm install backend
-        working-directory: ./backend
-        run: npm install
-      - name: lint backend
-        working-directory: ./backend
-        run: npm run lint
-      - name: run backend test (jest)
-        run: TEST_MONGODB_URI=$TEST_MONGODB_URI PORT=$PORT SECRET=$SECRET npm test
-        working-directory: ./backend
-        env:
-          TEST_MONGODB_URI: ${{secrets.TEST_MONGODB_URI}}
-          PORT: ${{secrets.PORT}}
-          SECRET: ${{secrets.SOME_SECRET}}
-      - name: npm install frontend
-        working-directory: ./frontend
-        run: npm install
-      - name: build frontend
-        working-directory: ./frontend
-        run: npm run build
-      - name: lint frontend
-        working-directory: ./frontend
-        run: npm run eslint
-      - name: run frontend test (jest/react)
-        working-directory: ./frontend
-        run: npm test
+      # - name: npm install backend
+      #   working-directory: ./backend
+      #   run: npm install
+      # - name: lint backend
+      #   working-directory: ./backend
+      #   run: npm run lint
+      # - name: run backend test (jest)
+      #   run: TEST_MONGODB_URI=$TEST_MONGODB_URI PORT=$PORT SECRET=$SECRET npm test
+      #   working-directory: ./backend
+      #   env:
+      #     TEST_MONGODB_URI: ${{secrets.TEST_MONGODB_URI}}
+      #     PORT: ${{secrets.PORT}}
+      #     SECRET: ${{secrets.SOME_SECRET}}
+      # - name: npm install frontend
+      #   working-directory: ./frontend
+      #   run: npm install
+      # - name: build frontend
+      #   working-directory: ./frontend
+      #   run: npm run build
+      # - name: lint frontend
+      #   working-directory: ./frontend
+      #   run: npm run eslint
+      # - name: run frontend test (jest/react)
+      #   working-directory: ./frontend
+      #   run: npm test
       - name: e2e tests
         uses: cypress-io/github-action@v2
         with:
           working-directory: ./frontend
           command: npm run test:e2e
-          start: cd ../backend && TEST_MONGODB_URI=$TEST_MONGODB_URI PORT=$PORT SECRET=$SECRET npm run start:test
+          # start: cd ../backend && TEST_MONGODB_URI=$TEST_MONGODB_URI PORT=$PORT SECRET=$SECRET npm run start:test
+          start: cd ./../backend && npm install
           wait-on: http://localhost:${{secrets.PORT}}
         env:
           TEST_MONGODB_URI: ${{secrets.TEST_MONGODB_URI}}
