@@ -27,10 +27,8 @@ jobs:
         working-directory: ./backend
         run: ls -a
       - name: run backend and test
-        run: MONGODB_URI=$MONGODB_URI PORT=$PORT SECRET=$SECRET npm start &
+        run: MONGODB_URI=$MONGODB_URI PORT=$PORT SECRET=$SECRET npm start ;
         working-directory: ./backend
-        with:
-          wait-on: http://localhost:$PORT
         env:
           MONGODB_URI: ${{secrets.MONGODB_URI}}
           PORT: ${{secrets.PORT}}
