@@ -20,22 +20,22 @@ jobs:
       - name: npm install backend
         working-directory: ./backend
         run: npm install
-      - name: run backend
-        run: MONGODB_URI=$MONGODB_URI PORT=$PORT SECRET=$SECRET npm start & npx wait-on http://127.0.0.1:3001
-        working-directory: ./backend
-        env:
-          MONGODB_URI: ${{secrets.MONGODB_URI}}
-          PORT: ${{secrets.PORT}}
-          SECRET: ${{secrets.SOME_SECRET}}
       - name: lint backend
         working-directory: ./backend
         run: npm run lint
       - name: list backend
         working-directory: ./backend
         run: ls -a
-      - name: run jest test
-        run: npm test
+      - name: run test
+        run: TEST_MONGODB_URI=$TEST_MONGODB_URI PORT=$PORT SECRET=$SECRET npm test
         working-directory: ./backend
+        env:
+          TEST_MONGODB_URI: ${{secrets.TEST_MONGODB_URI}}
+          PORT: ${{secrets.PORT}}
+          SECRET: ${{secrets.SOME_SECRET}}
+      # - name: run jest test
+      #   run: npm test
+      #   working-directory: ./backend
       # - name: test backend
       #   run: cd backend && npm test
       # - name: e2e tests
