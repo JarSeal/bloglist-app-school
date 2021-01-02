@@ -44,7 +44,7 @@ jobs:
         run: npm test
       - name: copy frontend to backend folder
         working-directory: ./frontend
-        run: cp -rf build/**/*.* ../backend/front
+        run: cp -rf build ../backend/front
       - name: list copy results
         working-directory: ./backend
         run: ls && ls front
