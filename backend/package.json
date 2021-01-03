@@ -8,7 +8,7 @@
   },
   "scripts": {
     "start": "cross-env NODE_ENV=production node index.js",
-    "start-prod": "cross-env NODE_ENV=production SERVE_STATIC=production node index.js",
+    "start-prod": "NODE_ENV=production SERVE_STATIC=production node index.js",
     "dev": "cross-env NODE_ENV=development nodemon index.js",
     "lint": "eslint .",
     "test": "cross-env NODE_ENV=test jest --verbose --runInBand --detectOpenHandles",
