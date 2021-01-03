@@ -9,4 +9,8 @@ router.post('/reset', async (request, response) => {
   response.status(204).end();
 });
 
+router.get('/health', async (request, response) => {
+  response.send('ok');
+});
+
 module.exports = router;

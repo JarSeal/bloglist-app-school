@@ -17,6 +17,8 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: '12.x'
+      
+      # BACKEND INSTALL AND TESTS:
       - name: npm install backend
         working-directory: ./backend
         run: npm install
@@ -30,13 +32,8 @@ jobs:
           TEST_MONGODB_URI: ${{secrets.TEST_MONGODB_URI}}
           PORT: ${{secrets.PORT}}
           SECRET: ${{secrets.SOME_SECRET}}
-      # - name: run test server in background (for e2e tests)
-      #   working-directory: ./backend
-      #   run: TEST_MONGODB_URI=$TEST_MONGODB_URI PORT=$PORT SECRET=$SECRET npm run start:test &
-      #   env:
-      #     TEST_MONGODB_URI: ${{secrets.TEST_MONGODB_URI}}
-      #     PORT: ${{secrets.PORT}}
-      #     SECRET: ${{secrets.SOME_SECRET}}
+      
+      # FRONTEND INSTALL AND TESTS:
       - name: npm install frontend
         working-directory: ./frontend
         run: npm install
@@ -49,9 +46,11 @@ jobs:
       - name: run frontend test (jest/react)
         working-directory: ./frontend
         run: npm test
-      - name: copy frontend to backend folder
-        working-directory: ./frontend
-        run: cp -rf build ../backend/front
+      # - name: copy frontend to backend folder
+      #   working-directory: ./frontend
+      #   run: cp -r build ../backend/front
+      
+      # END TO END TESTS:
       - name: start e2e tests backend server
         working-directory: ./backend
         run: TEST_MONGODB_URI=$TEST_MONGODB_URI PORT=$PORT SECRET=$SECRET npm run start:test &
@@ -65,6 +64,19 @@ jobs:
       - name: run cypress (e2e tests)
         working-directory: ./frontend
         run: npm run test:e2e
+      
+      # HEROKU DEPLOYMENT:
+      - uses: akhileshns/heroku-deploy@v3.7.8
+        if: "github.event_name == 'push' && !contains(github.event.head_commit.message, '#skip')"
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: ${{secrets.HEROKU_APP_NAME}}
+          heroku_email: ${{secrets.HEROKU_EMAIL}}
+          healthcheck: "https://${{secrets.HEROKU_APP_NAME}}.herokuapp.com/health"
+          checkstring: "ok"
+          appdir: "backend"
+          rollbackonhealthcheckfailed: true
+      
       # - name: e2e tests
       #   uses: cypress-io/github-action@v2
       #   with:
