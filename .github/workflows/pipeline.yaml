@@ -72,10 +72,10 @@ jobs:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: ${{secrets.HEROKU_APP_NAME}}
           heroku_email: ${{secrets.HEROKU_EMAIL}}
-          healthcheck: "https://${{secrets.HEROKU_APP_NAME}}.herokuapp.com/api/health"
-          checkstring: "ok"
           appdir: "backend"
-          rollbackonhealthcheckfailed: true
+          # healthcheck: "https://${{secrets.HEROKU_APP_NAME}}.herokuapp.com/api/health"
+          # checkstring: "ok"
+          # rollbackonhealthcheckfailed: true
       
       # - name: e2e tests
       #   uses: cypress-io/github-action@v2
