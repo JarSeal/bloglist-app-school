@@ -1,2 +1,3 @@
 build
-frontend
+front
+.eslintrc.js
