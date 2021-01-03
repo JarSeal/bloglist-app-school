@@ -165,7 +165,7 @@ const App = () => {
       </div>
       <footer style={{
         opacity: 0.2, fontSize: '12px', textAlign: 'center', marginTop: '-18px', marginBottom: '50px'
-      }}>by Kai Forsman..</footer>
+      }}>by Kai Forsman.</footer>
     </div>
   );
 };
